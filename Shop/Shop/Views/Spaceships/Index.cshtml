@@ -1,20 +1,43 @@
-﻿<div class="h1">
+﻿@model IEnumerable<Shop.Models.Spaceship.SpaeshipsIndexViewModel>
+
+<div class="h1">
     Spaceships
 </div> 
+
+@{
+    int rowNumber = 1;
+}
+
+<div>
+    <a asp-action="create" asp-controller="spaceships" class="btn btn-primary">Create</a> 
+</div>
+
+
 
 
 <form method="post"> 
     <table class=" table table-hover">
         <thead>
             <tr>
-                <th>Nr</th> 
-                <th>Name</th>
-                <th>Type</th>
-                <th>Passanger</th> 
-                <th>Engin Power</th> 
+                <th scope="col">Nr</th> 
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Passanger</th>
+                <th scope="col">Engin Power</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody> 
+            @foreach (var spaceship in Model)
+            {
+                <tr>
+                    <td>@rowNumber</td>
+                    <td>@spaceship.Name</td>
+                    <td>@spaceship.Type</td>
+                    <td>@spaceship.Passangers</td>
+                    <td>@spaceship.EnginPower</td>
+                </tr>
+                rowNumber += 1;
+            }
             <tr>
                 <td></td>
                 <td></td>
