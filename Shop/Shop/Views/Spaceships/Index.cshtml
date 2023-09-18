@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<Shop.Models.Spaceship.SpaeshipsIndexViewModel>
 
-<div class="h1">
+@* <div class="h1">
     Spaceships
-</div> 
+</div>  *@
 
 @{
     int rowNumber = 1;
@@ -24,6 +24,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">Passanger</th>
                 <th scope="col">Engin Power</th>
+                <th></th>
             </tr>
         </thead>
         <tbody> 
@@ -35,6 +36,11 @@
                     <td>@spaceship.Type</td>
                     <td>@spaceship.Passangers</td>
                     <td>@spaceship.EnginPower</td>
+                    <td>
+                        <a asp-action="details" asp-controller="spaceships" asp-route-id="@spaceship.Id" class="btn-btn-info">Details</a>
+                        <a asp-action="update" asp-controller="spaceships" asp-route-id="@spaceship.Id" class="btn-btn-primary">Update</a>
+                        <a asp-action="delete" asp-controller="spaceships" asp-route-id="@spaceship.Id" class="btn-btn-danger">Delete</a>
+                    </td>
                 </tr>
                 rowNumber += 1;
             }
