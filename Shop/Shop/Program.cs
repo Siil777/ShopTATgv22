@@ -1,7 +1,6 @@
-
-
-
 using Microsoft.EntityFrameworkCore;
+using Shop.ApplicationServices.Services;
+using Shop.Core.ServiceInterface;
 using Shop.Data;
 
 
@@ -14,6 +13,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ShopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//add dependence interface and service class
+builder.Services.AddScoped<ISpaceshipServices, SpaceshipServices>(); 
+
+
 
 
 
