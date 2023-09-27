@@ -17,6 +17,7 @@ else
 <div >
     <form method="post" enctype="multipart/form-data"> 
         <input asp-for="Id" type="hidden"/>
+        <input asp-for="CreatedAt" type="hidden" /> 
 
 
         <div class="form-group row"> 
@@ -30,7 +31,7 @@ else
         <div class="form-group row">
             <label asp-for="Type" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Type" class="form-control" />
 
             </div>
         </div>
@@ -38,7 +39,7 @@ else
         <div class="form-group row">
             <label asp-for="Passangers" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Passangers" class="form-control" />
 
             </div>
         </div>
@@ -46,7 +47,7 @@ else
         <div class="form-group row">
             <label asp-for="EnginPower" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="EnginPower" class="form-control" />
 
             </div>
         </div>
@@ -54,7 +55,7 @@ else
         <div class="form-group row">
             <label asp-for="Crew" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Crew" class="form-control" />
 
             </div>
         </div>
@@ -62,7 +63,7 @@ else
         <div class="form-group row">
             <label asp-for="Company" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="Company" class="form-control" />
 
             </div>
         </div>
@@ -70,11 +71,26 @@ else
         <div class="form-group row">
             <label asp-for="CargoWeight" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="Name" class="form-control" />
+                <input asp-for="CargoWeight" class="form-control" />
 
             </div>
-        </div>
+            <div class="form-group row">
+                <label asp-for="Files" class="col-sm-2 col-form-label"></label> 
+                <div class="col-sm-5"> 
+                    <div class="custom-file">
+                        <input class="form-control custom-file-label" asp-for="Files" multiple type="file" />
+                        <label class="custom-file-label">Choose file...</label>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+        @foreach(var images in Model.FileToApiViewModels)
+        {
+            <partial name="_Images" model="images" />
+        }
+
+        <hr/>
         @if (Model.Id.HasValue)
         {
             <input asp-action="update" asp-controller="spaceships" type="submit" class="btn btn-primary" value="Update" />
@@ -86,11 +102,25 @@ else
         }
 
         <a asp-action="index" class="btn btn-pimary">Index</a> 
-
-
-
-        
-
-
     </form>
 </div>
+
+@section Scripts
+
+{
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileLabel = $(this).next('.custom-file-label');
+                var files = $(this)[0].files;
+                if (files.length > 1) {
+                    fileLabel.html(file.length + ' files selected');
+                }
+                else if (files.length == 1) {
+                    fileLabel.html(files[0].name);
+                }
+
+            });
+        });
+    </script>
+}

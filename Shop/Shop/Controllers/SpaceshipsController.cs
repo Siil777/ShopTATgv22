@@ -5,6 +5,7 @@ using Shop.Core.Dto;
 using Shop.Core.ServiceInterface;
 using Shop.Data;
 using Shop.Models.Spaceship;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Shop.Controllers
 {
@@ -12,15 +13,18 @@ namespace Shop.Controllers
     {
         private readonly ShopContext _context;
         private readonly ISpaceshipServices _spaceshipServices;
+        
 
         public SpaceshipsController
             (
             ShopContext context,
             ISpaceshipServices spaceshipServices
+            
             ) 
         {
             _context = context;
             _spaceshipServices = spaceshipServices;
+            
         }
 
         public IActionResult Index()
@@ -60,13 +64,28 @@ namespace Shop.Controllers
                 EnginPower = vm.EnginPower,
                 Crew = vm.Crew,
                 Company = vm.Company,
-                CargoWeight = vm.CargoWeight
+                CargoWeight = vm.CargoWeight,
+                Files=vm.Files,
+                Image=vm.FileToApiViewModels
+                    .Select(x=>new FileToApiDto
+                    {
+                        Id= x.Id,
+                        FilePathExistingFilePath=x.FilePath,
+                        SpaceshipId=x.SpaceshipId,
+                    }).ToArray()
 
             };
 
             var result = await _spaceshipServices.Create(dto);
-            //return index
+
+            if (result==null)
+            {
+                return RedirectToAction(nameof(Index));
+
+            }
             return RedirectToAction(nameof(Index), vm);
+            //return index
+            
         }
 
         [HttpGet]
@@ -79,6 +98,14 @@ namespace Shop.Controllers
                 return NotFound();
 
             }
+
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id)
+                .Select(y => new FileToApiViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    Id = y.Id
+                }).ToArrayAsync();
 
             var vm = new SpaceshipDetailsViewModel();
 
@@ -94,6 +121,8 @@ namespace Shop.Controllers
             vm.CargoWeight = spaceship.CargoWeight;
             vm.CreatedAt= spaceship.CreatedAt;
             vm.Modifieted= spaceship.Modifieted;
+            vm.FileToApiViewModels.AddRange(images);
+            
 
 
             return View(vm);
@@ -180,6 +209,19 @@ namespace Shop.Controllers
             vm.Modifieted = spaceship.Modifieted;
 
             return View( vm);
+        }
+       
+        [HttpPost] 
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var spaceshipId = await _spaceshipServices.Delete(id);
+
+            if (spaceshipId==null)
+            {
+                return RedirectToAction(nameof(Index));
+
+            }
+            return RedirectToAction(nameof(Index));
         }
          
 

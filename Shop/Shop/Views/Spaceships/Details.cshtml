@@ -68,9 +68,16 @@
 
         </div>
 
+        @foreach (var images in Model.FileToApiViewModels)
+        {
+            
+            <partial name="_Images" model="images" />
+            
+        }
+
     </dl>
     </hr>
-    <a asp-action="index" class="btn btn-pimary">Index</a>
+    <a asp-action="index" class="btn btn-primary">Back</a>
 
 
 </duv>
