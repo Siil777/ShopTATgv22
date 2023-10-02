@@ -18,6 +18,9 @@
 
         public int CargoWeight { get; set; }
 
+        public List<FileToApiViewModel> FileToApiViewModels { get; set; }
+       = new List<FileToApiViewModel>();
+
 
         public DateTime CreatedAt { get; set; }
 

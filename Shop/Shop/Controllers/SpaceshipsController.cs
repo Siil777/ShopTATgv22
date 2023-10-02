@@ -13,17 +13,20 @@ namespace Shop.Controllers
     {
         private readonly ShopContext _context;
         private readonly ISpaceshipServices _spaceshipServices;
+        private readonly IFileServices _fileServices;
         
 
         public SpaceshipsController
             (
             ShopContext context,
-            ISpaceshipServices spaceshipServices
+            ISpaceshipServices spaceshipServices,
+            IFileServices fileServices
             
             ) 
         {
             _context = context;
             _spaceshipServices = spaceshipServices;
+            _fileServices = fileServices;
             
         }
 
@@ -69,8 +72,8 @@ namespace Shop.Controllers
                 Image=vm.FileToApiViewModels
                     .Select(x=>new FileToApiDto
                     {
-                        Id= x.Id,
-                        FilePathExistingFilePath=x.FilePath,
+                        Id= x.ImageId,
+                        ExistingFilePath=x.FilePath,
                         SpaceshipId=x.SpaceshipId,
                     }).ToArray()
 
@@ -104,7 +107,7 @@ namespace Shop.Controllers
                 .Select(y => new FileToApiViewModel
                 {
                     FilePath = y.ExistingFilePath,
-                    Id = y.Id
+                    ImageId = y.Id
                 }).ToArrayAsync();
 
             var vm = new SpaceshipDetailsViewModel();
@@ -140,6 +143,13 @@ namespace Shop.Controllers
             {
                 return NotFound();
             }
+            var images = await _context.FileToApis
+              .Where(x => x.SpaceshipId == id)
+              .Select(y => new FileToApiViewModel
+              {
+                  FilePath = y.ExistingFilePath,
+                  ImageId = y.Id
+              }).ToArrayAsync();
 
 
             var vm = new SpaceshipCreateUpdateViewModel();
@@ -156,6 +166,9 @@ namespace Shop.Controllers
             vm.CargoWeight = spaceship.CargoWeight;
             vm.CreatedAt = spaceship.CreatedAt;
             vm.Modifieted = spaceship.Modifieted;
+            vm.FileToApiViewModels.AddRange(images);
+
+
 
             return View("CreateUpdate",vm);
         }
@@ -174,6 +187,14 @@ namespace Shop.Controllers
                 CargoWeight = vm.CargoWeight,
                 CreatedAt = vm.CreatedAt,
                 Modifieted = DateTime.Now,
+                Files=vm.Files,
+                Image = vm.FileToApiViewModels 
+                .Select(x =>new FileToApiDto
+                {
+                    Id= x.ImageId,
+                    ExistingFilePath = x.FilePath,
+                    SpaceshipId= x.SpaceshipId
+                }).ToArray()
             };
             var result=await _spaceshipServices.Update(dto);
             if (result==null)
@@ -193,6 +214,13 @@ namespace Shop.Controllers
             {
                 return NotFound();
             }
+            var images = await _context.FileToApis
+             .Where(x => x.SpaceshipId == id)
+             .Select(y => new FileToApiViewModel
+             {
+                 FilePath = y.ExistingFilePath,
+                 ImageId = y.Id
+             }).ToArrayAsync();
             var vm = new SpaceshipDeleteViewModel();
 
             vm.Id = spaceship.Id;
@@ -207,6 +235,7 @@ namespace Shop.Controllers
             vm.CargoWeight = spaceship.CargoWeight;
             vm.CreatedAt = spaceship.CreatedAt;
             vm.Modifieted = spaceship.Modifieted;
+            vm.FileToApiViewModels.AddRange(images);
 
             return View( vm);
         }
@@ -223,10 +252,27 @@ namespace Shop.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-         
 
 
-            
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage(FileToApiViewModel vm)
+        {
+            var dto = new FileToApiDto()
+            {
+                Id = vm.ImageId,
+            };
+
+            var image = await _fileServices.RemoveImageFromApi(dto);
+
+            if (image == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
 
 

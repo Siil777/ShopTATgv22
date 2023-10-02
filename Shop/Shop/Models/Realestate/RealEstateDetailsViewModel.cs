@@ -10,7 +10,7 @@
         public int Floor { get; set; }
         public string BuildingType { get; set; }
 
-        public DateTime BuiltinYear { get; set; }
+        public DateTime BuiltinYear { get; set; } /*= DateTime.MinValue;*/
 
 
         public List<IFormFile> Files { get; set; }
