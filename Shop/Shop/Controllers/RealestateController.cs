@@ -74,7 +74,7 @@ namespace Shop.Controllers
                     .Select(x => new FileToApiDto
                     {
                         Id = x.Id,
-                        FilePathExistingFilePath = x.FilePath,
+                        ExistingFilePath = x.FilePath,
                         //1.filetoapidto 2.filetoapiviewmodel
                         RealsetateId = x.RealsetateId,
                     }).ToArray()
@@ -123,7 +123,8 @@ namespace Shop.Controllers
             vm.Floor = realestate.Floor;
             vm.BuildingType = realestate.BuildingType;
             vm.BuiltinYear = realestate.BuiltinYear;
-     
+            //string formattedDate = realestate.BuiltinYear.ToString("yyyy-MM-dd HH:mm:ss");
+
             vm.CreatedAt = realestate.CreatedAt;
             vm.UpdatedAt = realestate.UpdatedAt;
             vm.FileToApiViewModels.AddRange((IEnumerable<Models.Realestate.FileToApiRealViewModel>)images);
