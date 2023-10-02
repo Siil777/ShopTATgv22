@@ -47,34 +47,51 @@ namespace Shop.ApplicationServices.Services
         }
         public async Task<Spaceship> Update(SpaceshipDto dto)
         {
-            var domain = new Spaceship()
+            var domain = new Spaceship();
             {
-                Id = dto.Id,
-                Name = dto.Name,
-                Type = dto.Type,
-                Passangers = dto.Passangers,
-                EnginPower = dto.EnginPower,
-                Crew = dto.Crew,
-                Company = dto.Company,
-                CargoWeight = dto.CargoWeight,
-                CreatedAt = dto.CreatedAt,
-                Modifieted = DateTime.Now,
+                domain.Id = dto.Id;
+                domain.Name = dto.Name;
+                domain.Type = dto.Type;
+                domain.Passangers = dto.Passangers;
+                domain.EnginPower = dto.EnginPower;
+                domain.Crew = dto.Crew;
+                domain.Company = dto.Company;
+                domain.CargoWeight = dto.CargoWeight;
+                domain.CreatedAt = dto.CreatedAt;
+                domain.Modifieted = DateTime.Now;
+
+                _fileServices.FilesToApi(dto, domain);
+
+                _context.Spaceships.Update(domain);
+                await _context.SaveChangesAsync();
+
+
+                return domain;
 
 
 
-            };
+            }
 
-            _context.Spaceships.Update( domain ); 
-            await _context.SaveChangesAsync();
-
-
-            return domain;
+            
         }
 
         public async Task<Spaceship> Delete(Guid id)
         {
             var spaceshipId=await _context.Spaceships
                 .FirstOrDefaultAsync(x=>x.Id==id);
+
+            var images = await _context.FileToApis
+                .Where(x => x.SpaceshipId == id) 
+                .Select(y => new FileToApiDto
+                 {
+                     Id = y.Id,
+                     SpaceshipId = y.SpaceshipId,
+                     ExistingFilePath = y.ExistingFilePath,
+
+
+
+                 }).ToArrayAsync();
+            await _fileServices.RemoveImagesFromApi(images);
 
             _context.Spaceships.Remove(spaceshipId);    
             await _context.SaveChangesAsync();
