@@ -25,8 +25,10 @@ namespace Shop.Core.Dto
 
         public List<IFormFile> Files { get; set; }
 
-        public IEnumerable<FileToApiDto> Image { get; set; }
+        public IEnumerable<FileToDatabaseDto> Image { get; set; } = new List<FileToDatabaseDto>();
 
-        = new List<FileToApiDto>();
+       
+
+       
     }
 }

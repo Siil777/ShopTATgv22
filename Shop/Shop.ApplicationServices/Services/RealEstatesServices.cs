@@ -43,6 +43,13 @@ namespace Shop.ApplicationServices.Services
             realestate.UpdatedAt = DateTime.Now;
             //_fileServices.FilesToApi(dto, realestate);
 
+
+            if (dto.Files !=null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, realestate)
+
+            }
+
             await _context.RealEstates.AddAsync(realestate);
             await _context.SaveChangesAsync();
 

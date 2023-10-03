@@ -147,6 +147,18 @@ namespace Shop.ApplicationServices.Services
                     using(var target=new MemoryStream())
                     {
 
+                        FilesToDatabase files = new FilesToDatabase()
+                        {
+                            Id = Guid.NewGuid(),
+                            ImageTitle =file.FileName,
+                            RealEstateId=domain.Id,
+
+                        };
+                        file.CopyTo(target);
+                        files.ImageData = target.ToArray();
+
+                        _context.FilesToDatabases.Add(files);
+
 
                     }
 
