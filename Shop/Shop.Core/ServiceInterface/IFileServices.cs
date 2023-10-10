@@ -16,8 +16,13 @@ namespace Shop.Core.ServiceInterface
 
         Task<FileToApi> RemoveImageFromApi(FileToApiDto dto);
 
+        //void FilesToApi(KinderGartenDto dto, KinderGarten kindergarten);
 
-        void UploadFilesToDatabase(SpaceshipDto dto, Spaceship domain);
+        void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain);
+
+        //void UploadFilesToDatabase(KinderGartenDto dto, KinderGartenDto domain);
+
+        //public void RemoveFilesFromDatabase(Guid realEstateId);
 
 
         //void FilesToApi(RealEstateDto dto, RealEstate realestate);

@@ -46,7 +46,7 @@ namespace Shop.ApplicationServices.Services
 
             if (dto.Files !=null)
             {
-                _fileServices.UploadFilesToDatabase(dto, realestate)
+                _fileServices.UploadFilesToDatabase(dto, realestate);
 
             }
 
@@ -88,7 +88,7 @@ namespace Shop.ApplicationServices.Services
             var realestateId = await _context.RealEstates
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            //_context.RealEstates.Remove(realestateId);
+            _context.RealEstates.Remove(realestateId);
             await _context.SaveChangesAsync();
 
             return realestateId;

@@ -138,7 +138,7 @@ namespace Shop.ApplicationServices.Services
 
 
 
-        public void UploadFilesToDatabase(SpaceshipDto dto, Spaceship domain)
+        public void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain)
         {
             if ( dto.Files!=null &&  dto.Files.Count>0)
             {
@@ -166,5 +166,18 @@ namespace Shop.ApplicationServices.Services
 
             }
         }
+        //public void RemoveFilesFromDatabase(Guid realEstateId)
+        //{
+        //    var filesToRemove = _context.FilesToDatabases
+        //        .Where(file => file.RealEstateId == realEstateId)
+        //        .ToList();
+
+        //    foreach (var fileToRemove in filesToRemove)
+        //    {
+        //        _context.FilesToDatabases.Remove(fileToRemove);
+        //    }
+
+        //    _context.SaveChanges();
+        //}
     }
 }
