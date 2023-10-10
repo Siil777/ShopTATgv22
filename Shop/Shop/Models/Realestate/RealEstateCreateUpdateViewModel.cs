@@ -16,8 +16,8 @@ namespace Shop.Models.Realestate
 
         public List<IFormFile> Files { get; set; }
 
-        public List<FileToApiRealViewModel> FileToApiViewModels { get; set; }
-        = new List<FileToApiRealViewModel>();
+        public List<ImageToDatabaseViewModel> Image { get; set; }
+        = new List<ImageToDatabaseViewModel>();
 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
