@@ -76,6 +76,12 @@ namespace Shop.ApplicationServices.Services
 
             };
 
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, domain);
+
+            }
+
             _context.RealEstates.Update(domain);
             await _context.SaveChangesAsync();
 
@@ -87,6 +93,19 @@ namespace Shop.ApplicationServices.Services
         {
             var realestateId = await _context.RealEstates
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            //var photos = await _context.FilesToDatabases
+            //  .Where(x => x.RealEstateId == id)
+            //  .Select(y => new FileToDatabaseDto
+            //  {
+
+            //      Id = y.Id,
+            //      ImageTitle = y.ImageTitle,
+            //      RealEstateId = y.RealEstateId,
+
+            //  }).ToArrayAsync();
+
+
 
             _context.RealEstates.Remove(realestateId);
             await _context.SaveChangesAsync();
@@ -103,6 +122,8 @@ namespace Shop.ApplicationServices.Services
 
             return result;
         }
+        
+
     }
 
 

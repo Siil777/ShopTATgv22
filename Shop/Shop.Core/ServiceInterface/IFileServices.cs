@@ -16,17 +16,17 @@ namespace Shop.Core.ServiceInterface
 
         Task<FileToApi> RemoveImageFromApi(FileToApiDto dto);
 
-        //void FilesToApi(KinderGartenDto dto, KinderGarten kindergarten);
+        
 
         void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain);
 
-        //void UploadFilesToDatabase(KinderGartenDto dto, KinderGartenDto domain);
+        Task<FilesToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto);
 
-        //public void RemoveFilesFromDatabase(Guid realEstateId);
+       
 
+        Task RemoveAllImagesByRealEstateId_without_deleting_a_record(Guid realEstateId);
 
-        //void FilesToApi(RealEstateDto dto, RealEstate realestate);
-
+        Task<FilesToDatabase> RemoveAllImagesByRealEstateId_with_a_record(FileToDatabaseDto[] dto);
     }
   
         
