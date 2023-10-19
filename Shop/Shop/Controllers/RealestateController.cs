@@ -203,6 +203,15 @@ namespace Shop.Controllers
                 
                 CreatedAt = vm.CreatedAt,
                 UpdatedAt = DateTime.Now,
+                Files = vm.Files,
+                Image =vm.Image.Select(x => new FileToDatabaseDto
+                {
+                    Id=x.ImageId,
+                    ImageData=x.ImageData,
+                    ImageTitle=x.ImageTitle,
+                    RealEstateId=x.RealEstateId,
+
+                }).ToArray()
             };
             var result = await _realstateService.Update(dto);
             if (result == null)
@@ -217,25 +226,36 @@ namespace Shop.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var realstate = await _realstateService.GetAsync(id);
-            if (realstate == null)
+            var realEstate = await _realstateService.GetAsync(id);
+
+            if (realEstate == null)
             {
                 return NotFound();
             }
+
+            var photos = await _context.FilesToDatabases
+                .Where(x => x.RealEstateId == id)
+                .Select(y => new ImageToDatabaseViewModel
+                {
+                    RealEstateId = y.Id,
+                    ImageId = y.Id,
+                    ImageData = y.ImageData,
+                    ImageTitle = y.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(y.ImageData))
+                }).ToArrayAsync();
+
             var vm = new RealEstateDeleteViewModel();
 
-            vm.Id = realstate.Id;
-            vm.Address = realstate.Address;
-            vm.SizeSqrM = (float)realstate.SizeSqrM;
-
-            vm.RoomCount = realstate.RoomCount;
-
-            vm.Floor = realstate.Floor;
-            vm.BuildingType = realstate.BuildingType;
-            vm.BuiltinYear = realstate.BuiltinYear;
-            
-            vm.CreatedAt = realstate.CreatedAt;
-            vm.UpdatedAt = realstate.UpdatedAt;
+            vm.Id = realEstate.Id;
+            vm.Address = realEstate.Address;
+            vm.SizeSqrM = realEstate.SizeSqrM;
+            vm.RoomCount = realEstate.RoomCount;
+            vm.Floor = realEstate.Floor;
+            vm.BuildingType = realEstate.BuildingType;
+            vm.BuiltinYear = realEstate.BuiltinYear;
+            vm.CreatedAt = realEstate.CreatedAt;
+            vm.UpdatedAt = realEstate.UpdatedAt;
+            vm.imageToDatabaseViewModels.AddRange(photos);
 
             return View(vm);
         }
@@ -243,32 +263,77 @@ namespace Shop.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmation(Guid id)
         {
-            var realestateId = await _realstateService.Delete(id);
-
-            if (realestateId == null)
+            try
             {
-                return RedirectToAction(nameof(Index));
+                var realEstateId = await _realstateService.Delete(id);
 
+                if (realEstateId == null)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // Get the images associated with the real estate
+                var imagesToDelete = await _context.FilesToDatabases
+                    .Where(x => x.RealEstateId == id)
+                    .Select(y => new FileToDatabaseDto { Id = y.Id })
+                    .ToArrayAsync();
+
+                // Delete the images from the database
+                await _fileServices.RemoveAllImagesByRealEstateId_with_a_record(imagesToDelete);
+
+                return RedirectToAction(nameof(Index));
             }
+            catch (Exception ex)
+            {
+                // Handle and log the exception
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveImage(ImageToDatabaseViewModel file)
+        {
+            var dto = new FileToDatabaseDto()
+            {
+                Id = file.ImageId,
+            };
+
+            var image= await _fileServices.RemoveImageFromDatabase( dto);
+           
+
+            return RedirectToAction(nameof(Index));
+
+
+
+
+
+
+        }
+
+        //delete only all images. Left a record.Might be we won't delete a record, however we would like
+        //to delete all images of a record
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveAllImages(Guid realEstateId)
+        {
+            
+            await _fileServices.RemoveAllImagesByRealEstateId_without_deleting_a_record(realEstateId);
+
             return RedirectToAction(nameof(Index));
         }
 
-        //public async Task<IActionResult> RemoveImage1(ImageToDatabaseViewModel vm)
-        //{
-        //    var dto = new FileToDatabaseDto()
-        //    {
-        //        Id = vm.ImageId,
-        //    };
 
-        //    var image = await _fileServices.RemoveFilesFromDatabase(dto);
 
-        //    if (image == null)
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-
-        //    return RedirectToAction(nameof(Index));
-        //}
 
 
 
@@ -277,5 +342,10 @@ namespace Shop.Controllers
 
 
     }
+
+
+
+
 }
+
 
