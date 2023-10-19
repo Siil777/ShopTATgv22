@@ -1,6 +1,7 @@
 ﻿
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Shop.Core.Domain;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Shop.ApplicationServices.Services
 {
@@ -19,7 +21,7 @@ namespace Shop.ApplicationServices.Services
     {
         private readonly IHostEnvironment _webHost;
         private readonly ShopContext _context;
-        
+
 
 
 
@@ -27,7 +29,7 @@ namespace Shop.ApplicationServices.Services
             (
             IHostEnvironment webHost,
             ShopContext context
-            
+
 
 
             )
@@ -35,7 +37,7 @@ namespace Shop.ApplicationServices.Services
             _webHost = webHost;
             _context = context;
 
-            
+
 
 
         }
@@ -97,19 +99,19 @@ namespace Shop.ApplicationServices.Services
                 var imageId = await _context.FileToApis
                     .FirstOrDefaultAsync(x => x.ExistingFilePath == dto.ExistingFilePath);
 
-                var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\" 
+                var filePath = _webHost.ContentRootPath + "\\multipleFileUpload\\"
                     + imageId.ExistingFilePath;
 
-            
 
-            if (File.Exists(filePath))
-            {
+
+                if (File.Exists(filePath))
+                {
                     File.Delete(filePath);
 
-            }
+                }
                 _context.FileToApis.Remove(imageId);
                 await _context.SaveChangesAsync();
-        }
+            }
 
 
             return null;
@@ -140,18 +142,18 @@ namespace Shop.ApplicationServices.Services
 
         public void UploadFilesToDatabase(RealEstateDto dto, RealEstate domain)
         {
-            if ( dto.Files!=null &&  dto.Files.Count>0)
+            if (dto.Files != null && dto.Files.Count > 0)
             {
-                foreach (var file in  dto.Files)
+                foreach (var file in dto.Files)
                 {
-                    using(var target=new MemoryStream())
+                    using (var target = new MemoryStream())
                     {
 
                         FilesToDatabase files = new FilesToDatabase()
                         {
                             Id = Guid.NewGuid(),
-                            ImageTitle =file.FileName,
-                            RealEstateId=domain.Id,
+                            ImageTitle = file.FileName,
+                            RealEstateId = domain.Id,
 
                         };
                         file.CopyTo(target);
@@ -166,18 +168,79 @@ namespace Shop.ApplicationServices.Services
 
             }
         }
-        //public void RemoveFilesFromDatabase(Guid realEstateId)
-        //{
-        //    var filesToRemove = _context.FilesToDatabases
-        //        .Where(file => file.RealEstateId == realEstateId)
-        //        .ToList();
+        public async Task<FilesToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto)
+        {
+            var image = await _context.FilesToDatabases
+                .Where(x => x.Id == dto.Id)
+                .FirstOrDefaultAsync();
 
-        //    foreach (var fileToRemove in filesToRemove)
+            _context.FilesToDatabases.Remove(image);
+            await _context.SaveChangesAsync();
+
+            return image;
+        }
+
+        public async Task<FilesToDatabase> RemoveAllImagesByRealEstateId_with_a_record(FileToDatabaseDto[] dto)
+        {
+
+            foreach (var dtos in dto)
+            {
+                var photoId = await _context.FilesToDatabases
+                    .Where(x => x.Id == dtos.Id)
+                    .FirstOrDefaultAsync();
+
+                _context.FilesToDatabases.Remove(photoId);
+                await _context.SaveChangesAsync();
+
+            }
+
+            return null;
+        }
+
+
+        public async Task RemoveAllImagesByRealEstateId_without_deleting_a_record(Guid realEstateId)
+        {
+            var imagesToDelete = await _context.FilesToDatabases
+                .Where(x => x.RealEstateId == realEstateId)
+                .ToListAsync();
+
+            foreach (var image in imagesToDelete)
+            {
+                _context.FilesToDatabases.Remove(image);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+
+     
+
+        //public async Task RemoveAllImagesByReal(FileToDatabaseDto[] dto)
+        //{
+        //    var imagesToDelete = await _context.FilesToDatabases
+        //        .Where(x => x.Id ==  Dtos.Id)
+        //        .ToListAsync();
+
+        //    foreach (var image in imagesToDelete)
         //    {
-        //        _context.FilesToDatabases.Remove(fileToRemove);
+        //        _context.FilesToDatabases.Remove(image);
         //    }
 
-        //    _context.SaveChanges();
+        //    await _context.SaveChangesAsync();
         //}
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
+
