@@ -8,6 +8,7 @@
         public int RoomCount { get; set; }
 
         public int Floor { get; set; }
+
      
 
        

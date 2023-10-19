@@ -63,16 +63,25 @@
 
         </div>
     </dl>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Images</label>
+        <div class="col-sm-10">
+            <div class="row">
+                @foreach (var image in Model.Image)
+                {
+                    <div class="col-md-3">
+                        <partial name="_Images" model="image" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
     </hr>
     <a asp-action="index" class="btn btn-primary">Back</a>
 
 
-         @foreach (var images in Model.Image)
-        {
 
-            <partial name="_Images" model="images" />
-
-        }
 
     
     
