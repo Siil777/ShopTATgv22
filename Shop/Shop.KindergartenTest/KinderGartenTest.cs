@@ -189,7 +189,7 @@ namespace Shop.KindergartenTest
                 GroupName="Targv22",
                 ChildrenCount=10,
                 KindergartenName="OnNineCloud",
-                Teacher="Teacher1",
+                Teacher="Teacher",
                 CreatedAt=DateTime.Now,
                 UpdatedAt=DateTime.Now, 
 
