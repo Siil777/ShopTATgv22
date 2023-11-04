@@ -1,9 +1,39 @@
 ﻿@model Shop.Models.Realestate.RealEstateDeleteViewModel
-<h1>Delete</h1>
+
+
+<link rel="stylesheet" href="~/css/StyleForRealEstate11.1.23.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/StyleForRealEstateNav.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/TableForRealEstateCreateUpdate.css" asp-append-version="true" />
+
+
+<style>
+    .dark-transparent-background {
+        background-color: rgba(0, 0, 0, 0.8);
+        width: 100%;
+        height: 45%;
+        color: white;
+    }
+
+
+    /*  img {
+            position: relative;
+            height: 180px;
+            width: 50px;
+        } */
+
+</style>
+<div class="neon">
+
+    <div class="red">Delete</div>
+</div>
 
 <div>
-    <h4>RealEstates</h4>
+    <div class="neon">
+
+        <div class="green">Realestate</div>
+    </div>
     <hr />
+    <div class="dark-transparent-background ">
     <dl class="row">
         <div class="form-group row">
             <label asp-for="Id" class="col-sm-2 col-form-label"></label>
@@ -58,9 +88,10 @@
                 }
                 <form asp-controller="RealEstate" asp-action="RemoveAllImages" method="post">
                     <input type="hidden" name="realEstateId" value="@Model.Id" />
-                    <button type="submit" class="btn btn-danger">Delete All Images</button>
+                        <button type="submit" class="btn btn-outline-danger">Delete All Images</button>
                 </form>
             </div>
+        </div>
         </div>
 
    @*      <div class="form-group row">
@@ -99,8 +130,8 @@
     <hr />
     <form asp-action="DeleteConfirmation">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete record" class="btn btn-danger" />
-        <a asp-action="index" class="btn btn-primary">Index</a>
+        <input type="submit" class="btn btn-outline-danger" value="Delete record" />
+        <a asp-action="index" style="color:white;" class="btn btn-outline-primary">Back</a>
     </form>
 
 

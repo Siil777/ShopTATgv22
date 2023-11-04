@@ -1,20 +1,32 @@
 @model IEnumerable<Shop.Models.Realestate.RealEstateViewModel>
 
 
-<div class="h1">
-    Real Estates
+<link rel="stylesheet" href="~/css/StyleForRealEstate11.1.23.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/StyleForRealEstateNav.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/TabelForRealEstate.css" asp-append-version="true" />
+
+
+<div class="neon">
+    <div class="green">Realestate we are</div>
+    <div class="red">Opened</div>
 </div>
+
+
+
+
+
 @{
     int rowNumber = 1;
 }
 
 <div>
-    <a asp-action="create" asp-controller="realestate" class="btn btn-primary">Create</a>
+    <a asp-action="create" asp-controller="realestate" class="btn btn-outline-primary">Create</a>
 </div>
 
 
 <form method="post">
-    <table class="table table-hover">
+    <table class=" table table-hover">
+        
         <thead>
             <tr>
                 <th scope="col">Nr</th>
@@ -40,9 +52,9 @@
                     
                    
                     <td>
-                        <a asp-action="details" asp-controller="realestate" asp-route-id="@realestate.Id" class="btn btn-info">Details</a>
+                        <a asp-action="details" asp-controller="realestate" asp-route-id="@realestate.Id" class="btn btn-outline-info">Details</a>
                         <a asp-action="update" asp-controller="realestate" asp-route-id="@realestate.Id" class="btn btn-outline-primary">Update</a>
-                        <a asp-action="delete" asp-controller="realestate" asp-route-id="@realestate.Id" class="btn btn-danger">Delete</a>
+                        <a asp-action="delete" asp-controller="realestate" asp-route-id="@realestate.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
                 rowNumber += 1;
@@ -51,5 +63,6 @@
         </tbody>
     </table>
 </form>
+
 
 

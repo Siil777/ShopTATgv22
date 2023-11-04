@@ -1,0 +1,19 @@
+﻿table {
+    width: 100%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+table, th, td {
+    border: none;
+    color:white;
+}
+
+th {
+    padding: 5px;
+    text-align: left;
+}
+
+td {
+    padding: 5px;
+}

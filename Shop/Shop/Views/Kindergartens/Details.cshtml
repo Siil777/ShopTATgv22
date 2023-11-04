@@ -1,13 +1,55 @@
 ﻿@model Shop.Models.Kindergarten.KindergartenDetailsViewModel
 
 
+<link rel="stylesheet" href="~/css/kinder.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/KindergartenNav.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/TabelForRealEstate.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/inscriptionForKinderGarten.css" asp-append-version="true" />
+
+<style>
+    .dark-transparent-background {
+        background-color: rgba(0, 0, 0, 0.8);
+        width: 90%;
+        height: 45%;
+        color: white;
+    }
+    .movetable{
+        position:absolute;
+        top:20%;
+    }
 
 
-<h1>Details</h1>
+   
+
+    body {
+        overflow: hidden;
+    }
+
+
+</style>
+
+    <canvas id="myCanvas"></canvas>
+
+
 
 <div>
-    <h4> Kindergarten</h4>
+    @Html.Partial("SnowForKindergarten")
+</div>
+
+<svg viewBox="0 0 600 300">
+    <!-- Symbol-->
+    <symbol id="s-text"><text text-anchor="middle" x="77%" y="18%" dy=".35em">Kindergarten</text></symbol><!-- Duplicate symbols-->
+    <use class="text" xlink:href="#s-text"></use>
+    <use class="text" xlink:href="#s-text"></use>
+    <use class="text" xlink:href="#s-text"></use>
+    <use class="text" xlink:href="#s-text"></use>
+    <use class="text" xlink:href="#s-text"></use>
+</svg>
+
+<div>
+    <div class="movetable">
     <hr />
+    <div class="dark-transparent-background ">
     <dl class="row">
         <div class="form-group row">
             <label asp-for="Id" class="col-sm-2 col-form-label"></label>
@@ -44,8 +86,141 @@
             <label asp-for="UpdatedAt" class="col-sm-2 col-form-label"></label>
             @Html.DisplayFor(model => Model.UpdatedAt)
         </div>
+    </div>
+    </div>
     </dl>
     <hr />
     
-        <a asp-action="index" class="btn btn-primary">Index</a>
-   
+  
+   </div>
+
+<a asp-action="index" style="position:absolute;top:70%;" class="btn btn-outline-primary">Back</a>
+
+
+<script>
+
+    // Use different canvas element and variable names for the second animation
+    var cCreate = document.getElementById("myCanvas");
+    var ctxCreate = cCreate.getContext("2d");
+    var maskCreate;
+
+    var pointCount = 500;
+    var str = "Details";
+    var fontStr = "bold 128pt Helvetica Neue, Helvetica, Arial, sans-serif";
+
+    ctxCreate.font = fontStr;
+    ctxCreate.textAlign = "center";
+    cCreate.width = ctxCreate.measureText(str).width;
+    cCreate.height = 128; // Set to font size
+
+    var whitePixels = [];
+    var points = [];
+
+    // Use different function names for the second animation
+    var pointCreate = function (x, y, vx, vy) {
+        this.x = x;
+        this.y = y;
+        this.vx = vx || 1;
+        this.vy = vy || 1;
+    }
+    pointCreate.prototype.update = function () {
+        ctxCreate.beginPath();
+        ctxCreate.fillStyle = "white";
+        ctxCreate.arc(this.x, this.y, 1, 0, 2 * Math.PI);
+        ctxCreate.fill();
+        ctxCreate.closePath();
+
+        // Change direction if running into black pixel
+        if (this.x + this.vx >= cCreate.width || this.x + this.vx < 0 || maskCreate.data[coordsToI(this.x + this.vx, this.y, maskCreate.width)] != 255) {
+            this.vx *= -1;
+            this.x += this.vx * 2;
+        }
+        if (this.y + this.vy >= cCreate.height || this.y + this.vy < 0 || maskCreate.data[coordsToI(this.x, this.y + this.vy, maskCreate.width)] != 255) {
+            this.vy *= -1;
+            this.y += this.vy * 2;
+        }
+
+        for (var k = 0, m = points.length; k < m; k++) {
+            if (points[k] === this) continue;
+
+            var d = Math.sqrt(Math.pow(this.x - points[k].x, 2) + Math.pow(this.y - points[k].y, 2));
+            if (d < 5) {
+                ctxCreate.lineWidth = .2;
+                ctxCreate.beginPath();
+                ctxCreate.moveTo(this.x, this.y);
+                ctxCreate.lineTo(points[k].x, points[k].y);
+                ctxCreate.stroke();
+            }
+            if (d < 20) {
+                ctxCreate.lineWidth = .1;
+                ctxCreate.beginPath();
+                ctxCreate.moveTo(this.x, this.y);
+                ctxCreate.lineTo(points[k].x, points[k].y);
+                ctxCreate.stroke();
+            }
+        }
+
+        this.x += this.vx;
+        this.y += this.vy;
+    }
+
+    function loopCreate() {
+        ctxCreate.clearRect(0, 0, cCreate.width, cCreate.height);
+        for (var k = 0, m = points.length; k < m; k++) {
+            points[k].update();
+        }
+    }
+
+    function initCreate() {
+        // Draw text
+        ctxCreate.beginPath();
+        ctxCreate.fillStyle = "none";
+        ctxCreate.rect(0, 0, cCreate.width, cCreate.height);
+        ctxCreate.fill();
+        ctxCreate.font = fontStr;
+        ctxCreate.textAlign = "left";
+        ctxCreate.fillStyle = "#fff";
+        ctxCreate.fillText(str, 0, cCreate.height / 2 + (cCreate.height / 2));
+        ctxCreate.closePath();
+
+        // Save mask
+        maskCreate = ctxCreate.getImageData(0, 0, cCreate.width, cCreate.height);
+
+        // Draw background
+        ctxCreate.clearRect(0, 0, cCreate.width, cCreate.height);
+
+        // Save all white pixels in an array
+        for (var i = 0; i < maskCreate.data.length; i += 4) {
+            if (maskCreate.data[i] == 255 && maskCreate.data[i + 1] == 255 && maskCreate.data[i + 2] == 255 && maskCreate.data[i + 3] == 255) {
+                whitePixels.push([iToX(i, maskCreate.width), iToY(i, maskCreate.width)]);
+            }
+        }
+
+        for (var k = 0; k < pointCount; k++) {
+            addPointCreate();
+        }
+    }
+
+    function addPointCreate() {
+        var spawn = whitePixels[Math.floor(Math.random() * whitePixels.length)];
+
+        var p = new pointCreate(spawn[0], spawn[1], Math.floor(Math.random() * 2 - 1), Math.floor(Math.random() * 2 - 1));
+        points.push(p);
+    }
+
+    function iToX(i, w) {
+        return ((i % (4 * w)) / 4);
+    }
+    function iToY(i, w) {
+        return (Math.floor(i / (4 * w)));
+    }
+    function coordsToI(x, y, w) {
+        return ((maskCreate.width * y) + x) * 4;
+
+    }
+
+    setInterval(loopCreate, 50);
+    initCreate();
+
+
+</script>

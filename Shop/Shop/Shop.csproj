@@ -33,6 +33,10 @@
 
   <ItemGroup>
     <Folder Include="multipleFileUpload\" />
+    <Folder Include="imgSpace\" />
+    <Folder Include="wwwroot\css\kindergartencss\" />
+    <Folder Include="wwwroot\css\realestatecss\" />
+    <Folder Include="wwwroot\css\spaceshipcss\" />
   </ItemGroup>
 
 </Project>

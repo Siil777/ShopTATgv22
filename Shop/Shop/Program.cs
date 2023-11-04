@@ -66,6 +66,9 @@ app.MapControllerRoute(
 
 app.Run();
 
+
+app.UseStaticFiles();
+
 //app.UseEndpoints(endpoints =>
 //{
 //    endpoints.MapControllerRoute(

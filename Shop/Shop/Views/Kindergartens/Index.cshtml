@@ -1,19 +1,44 @@
 ﻿@model IEnumerable<Shop.Models.Kindergarten.KindergartensIndexViewModel>
 
+<link rel="stylesheet" href="~/css/kinder.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/KindergartenNav.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/TabelForRealEstate.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/inscriptionForKinderGarten.css" asp-append-version="true" />
+<div>
+    @Html.Partial("SnowForKindergarten")
+</div>
 
+<style>
+    body{
+        overflow:hidden;
+    }
+</style>
+
+<svg viewBox="0 0 600 300">
+    <!-- Symbol-->
+    <symbol id="s-text"><text text-anchor="middle" x="8%" y="5%" dy=".35em">Kindergarten</text></symbol><!-- Duplicate symbols-->
+    <use class="text" xlink:href="#s-text"></use>
+    <use class="text" xlink:href="#s-text"></use>
+    <use class="text" xlink:href="#s-text"></use>
+    <use class="text" xlink:href="#s-text"></use>
+    <use class="text" xlink:href="#s-text"></use>
+</svg>
 
 @{
     int rowNumber = 1;
 }
 
-<div>
-    <a asp-action="Create" asp-controller="Kindergartens" class="btn btn-primary">Create</a>
+
+
+<div class="button">
+    <a asp-action="Create" asp-controller="Kindergartens" class="btn btn-outline-primary">Create</a>
 </div>
 
 
 
 
 <form method="post">
+  
     <table class=" table table-hover">
         <thead>
             <tr>
@@ -45,9 +70,9 @@
 
 
                     <td>
-                        <a asp-action="Details" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-info">Details</a>
-                        <a asp-action="Update" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-primary">Update</a>
-                        <a asp-action="Delete" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-danger">Delete</a>
+                        <a asp-action="Details" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-outline-info">Details</a>
+                        <a asp-action="Update" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-outline-primary">Update</a>
+                        <a asp-action="Delete" asp-controller="Kindergartens" asp-route-id="@kindergarten.Id" class="btn btn-outline-danger">Delete</a>
 
                     </td>
                 </tr>
@@ -62,5 +87,20 @@
             </tr>
         </tbody>
     </table>
+    
 
 </form>
+
+
+
+<style>
+    form{
+        position:absolute;
+        top:24%;
+    }
+    .button{
+        position: absolute;
+        top: 16%;
+        
+    }
+</style>

@@ -2,26 +2,40 @@
 
 
 
+<link rel="stylesheet" href="~/css/StyleForRealEstate11.1.23.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/StyleForRealEstateNav.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/TableForRealEstateCreateUpdate.css" asp-append-version="true" />
+
+
+
+
 
 @if (Model.Id.HasValue)
 {
-    <h1>Update</h1>
+    <div class="neon">
+
+        <div class="red">Update</div>
+    </div>
 
 }
 else
 {
-    <h1>Create</h1>
+    <div class="neon">
+        
+        <div class="red">Create</div>
+    </div>
+
 }
 
 
 
 <div>
-    <form method="post" enctype="multipart/form-data">
+    <form class="login-form"  method="post" enctype="multipart/form-data">
         <input asp-for="Id" type="hidden" />
         <input asp-for="CreatedAt" type="hidden" />
 
 
-        <div class="form-group row">
+        <div class="form-input-material">
             <label asp-for="Address" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="Address" class="form-control" />
@@ -29,7 +43,7 @@ else
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-input-material">
             <label asp-for="SizeSqrM" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="SizeSqrM" class="form-control" />
@@ -37,7 +51,7 @@ else
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-input-material">
             <label asp-for="RoomCount" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="RoomCount" class="form-control" />
@@ -45,7 +59,7 @@ else
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-input-material">
             <label asp-for="Floor" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="Floor" class="form-control" />
@@ -53,7 +67,7 @@ else
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-input-material">
             <label asp-for="BuildingType" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="BuildingType" class="form-control" />
@@ -61,7 +75,7 @@ else
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-input-material">
             <label asp-for="BuiltinYear" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
                 <input asp-for="BuiltinYear" class="form-control" />
@@ -98,7 +112,7 @@ else
        @foreach (var images in Model.Image)
         {
             <partial name="_Images" model="images" />
-            <input asp-action="RemoveImage" asp-controller="RealEstate" asp-route-imageId="@images.ImageId" type="submit" class="btn btn-danger" value="Remove Image" />
+            <input asp-action="RemoveImage" asp-controller="RealEstate" style="width:15%;" asp-route-imageId="@images.ImageId" type="submit" class="btn btn-outline-danger" value="Remove Image" />
             
         }
     @*     @foreach (var images in Model.Image)
@@ -112,15 +126,15 @@ else
         <hr />
         @if (Model.Id.HasValue)
         {
-            <input asp-action="Update" asp-controller="RealEstate" type="submit" class="btn btn-primary" value="Update" />
+            <input asp-action="Update" style="width:10%; color:white;" asp-controller="RealEstate" type="submit" class="btn btn-outline-info" value="Update" />
 
         }
         else
         {
-            <input asp-action="Create" asp-controller="RealEstate" type="submit" class="btn btn-primary" value="Create" />
+            <input asp-action="Create" style="width:10%; color:white;" asp-controller="RealEstate" type="submit" class="btn btn-outline-info" value="Create" />
         }
 
-        <a asp-action="index" class="btn btn-primary">Index</a>
+        <a asp-action="index" style="width:10%; color:white;" class="btn btn-outline-info">Back</a>
     </form>
 </div>
 @section Scripts
