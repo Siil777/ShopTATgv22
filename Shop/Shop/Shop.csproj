@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\css\kindergartencss\**" />
+    <Compile Remove="wwwroot\css\realestatecss\**" />
+    <Compile Remove="wwwroot\css\spaceshipcss\**" />
+    <Content Remove="wwwroot\css\kindergartencss\**" />
+    <Content Remove="wwwroot\css\realestatecss\**" />
+    <Content Remove="wwwroot\css\spaceshipcss\**" />
+    <EmbeddedResource Remove="wwwroot\css\kindergartencss\**" />
+    <EmbeddedResource Remove="wwwroot\css\realestatecss\**" />
+    <EmbeddedResource Remove="wwwroot\css\spaceshipcss\**" />
+    <None Remove="wwwroot\css\kindergartencss\**" />
+    <None Remove="wwwroot\css\realestatecss\**" />
+    <None Remove="wwwroot\css\spaceshipcss\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.21">
       <PrivateAssets>all</PrivateAssets>
@@ -34,9 +49,6 @@
   <ItemGroup>
     <Folder Include="multipleFileUpload\" />
     <Folder Include="imgSpace\" />
-    <Folder Include="wwwroot\css\kindergartencss\" />
-    <Folder Include="wwwroot\css\realestatecss\" />
-    <Folder Include="wwwroot\css\spaceshipcss\" />
   </ItemGroup>
 
 </Project>

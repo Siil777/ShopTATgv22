@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Shop.Models.Spaceship.SpaeshipsIndexViewModel>
 
-<link rel="stylesheet" href="~/css/NavMenuSpaceShop.css" asp-append-version="true" />
+@* <link rel="stylesheet" href="~/css/NavMenuSpaceShop.css" asp-append-version="true" /> *@
 <link rel="stylesheet" href="~/css/SpaceshopSpacePage.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/SpaceShopInscriptionSpaceShop.css"asp-append-version="true" />
 
@@ -14,7 +14,7 @@
 }
 
 <div class="btn-for-create-space-ship-page-table">
-    <a asp-action="create" asp-controller="spaceships" style="background-color:#999966" class="btn btn-primary">Create</a>
+    <a asp-action="create" asp-controller="spaceships" style="background-color:#999966; margin-bottom: 10px;" class="btn btn-primary">Create</a>
 </div>
 
 
@@ -43,9 +43,12 @@
                     <td>@spaceship.Passangers</td>
                     <td>@spaceship.EnginPower</td>
                     <td>
-                        <a asp-action="details" asp-controller="spaceships" asp-route-id="@spaceship.Id" style="background-color:#e9d362; color:brown;"  class="btn btn-info">Details</a>
-                        <a asp-action="update" asp-controller="spaceships" asp-route-id="@spaceship.Id" style="background-color:transparent; border: solid 1px;" class="btn btn-primary">Update</a>
-                        <a asp-action="delete" asp-controller="spaceships" asp-route-id="@spaceship.Id" class="btn btn-danger">Delete</a>
+                        
+                            <a asp-action="details" asp-controller="spaceships" asp-route-id="@spaceship.Id" style="background-color:#e9d362; color:brown; margin-right: 8px;" class="btn btn-info">Details</a>
+                            <a asp-action="update" asp-controller="spaceships" asp-route-id="@spaceship.Id" style="background-color:transparent; border: solid 1px; margin-right: 10px;" class="btn btn-primary">Update</a>
+                        <a asp-action="delete" asp-controller="spaceships" asp-route-id="@spaceship.Id" style="background-color:transparent; border: solid 1px; margin-top: 10px;"  class="btn btn-danger">Delete</a>
+                       
+
                     </td>
                 </tr>
                 rowNumber += 1;

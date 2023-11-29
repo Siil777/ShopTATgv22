@@ -18,10 +18,7 @@ namespace Shop.Controllers
             _weatherForecastServices = weatherForecastServices;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+      
 
         [HttpPost]
         public IActionResult SearchCity(SearchCityViewModel model)
@@ -64,6 +61,10 @@ namespace Shop.Controllers
 
             return View(vm);
 
+        }
+        public IActionResult Index()
+        {
+            return View();
         }
 
 

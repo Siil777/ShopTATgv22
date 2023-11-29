@@ -8,10 +8,11 @@
 
 <style>
     .dark-transparent-background {
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.3);
         width: 100%;
         height: 45%;
         color: white;
+        border-radius: 5px;
     }
 
 
@@ -88,7 +89,7 @@
                 }
                 <form asp-controller="RealEstate" asp-action="RemoveAllImages" method="post">
                     <input type="hidden" name="realEstateId" value="@Model.Id" />
-                        <button type="submit" class="btn btn-outline-danger">Delete All Images</button>
+                        <button style="margin-top: 4px;" type="submit" class="btn btn-outline-danger">Delete All Images</button>
                 </form>
             </div>
         </div>

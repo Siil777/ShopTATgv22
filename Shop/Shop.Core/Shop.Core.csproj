@@ -26,4 +26,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dto\test\" />
+  </ItemGroup>
+
 </Project>

@@ -1,103 +1,42 @@
-﻿@model Shop.Models.Kindergarten.KindergartenDetailsViewModel
+﻿@model Shop.Models.Coctails.SeachCoctailViewModel
 
 
-<link rel="stylesheet" href="~/css/kinder.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/KindergartenNav.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/TabelForRealEstate.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/css/inscriptionForKinderGarten.css" asp-append-version="true" />
-
-<style>
-    .dark-transparent-background {
-        background-color: rgba(0, 0, 0, 0.8);
-        width: 90%;
-        height: 45%;
-        color: white;
-    }
-    .movetable{
-        position:absolute;
-        top:20%;
-    }
-
-
-   
-
-    body {
-        overflow: hidden;
-    }
-
-
-</style>
-
-    @* <canvas id="myCanvas"></canvas> *@
-
-
-
-<div>
-    <div class="movetable">
-    <hr />
-    <div class="dark-transparent-background ">
-    <dl class="row">
-        <div class="form-group row">
-            <label asp-for="Id" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => Model.Id)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="GroupName" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => Model.GroupName)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="ChildrenCount" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => Model.ChildrenCount)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="KindergartenName" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => Model.KindergartenName)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="Teacher" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => Model.Teacher)
-        </div>
-
-
-        <div class="form-group row">
-            <label asp-for="CreatedAt" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => Model.CreatedAt)
-        </div>
-
-        <div class="form-group row">
-            <label asp-for="UpdatedAt" class="col-sm-2 col-form-label"></label>
-            @Html.DisplayFor(model => Model.UpdatedAt)
-        </div>
-    </div>
-    </div>
-    </dl>
-    <hr />
+<div class="container">
     
-  
-   </div>
+    <form method="post">
+        <div class="container">
 
-<a asp-action="index" style="position:absolute;top:70%;" class="btn btn-outline-primary">Back</a>
+            <canvas id="myCanvasCreate"></canvas>
+            <div class="form-group  col-md-offset-3 col-md-5">
+                <h2>Seach a coctail</h2>
+                <label asp-for="CoctailName" style="font-family:Arial"></label>
+                <input asp-for="CoctailName" class="form-control" />
+                <span asp-validation-for="CoctailName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="container">
+            <div class="form-group col-md-offset-3 col-md-5">
+                <button asp-controller="coctails" style="margin-top: 5px;" asp-action="SearchCoctail" class="btn btn-outline-primary">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
 
-
-@* <script>
+<script>
 
     // Use different canvas element and variable names for the second animation
-    var cCreate = document.getElementById("myCanvas");
+    var cCreate = document.getElementById("myCanvasCreate");
     var ctxCreate = cCreate.getContext("2d");
     var maskCreate;
 
-    var pointCount = 500;
-    var str = "Details";
+    var pointCount = 600;
+    var str = "Seach coctail";
     var fontStr = "bold 128pt Helvetica Neue, Helvetica, Arial, sans-serif";
 
     ctxCreate.font = fontStr;
     ctxCreate.textAlign = "center";
     cCreate.width = ctxCreate.measureText(str).width;
-    cCreate.height = 128; // Set to font size
+    cCreate.height = 450; // Set to font size
 
     var whitePixels = [];
     var points = [];
@@ -209,4 +148,10 @@
     initCreate();
 
 
-</script> *@
+</script>
+<style>
+    #myCanvasCreate {
+        position: absolute;
+        left: 0; 
+    }
+</style>
