@@ -24,7 +24,7 @@ namespace Shop.ApplicationServices.Services
 
         public async Task<AcuWeatherResultDto> AcuWeatherResult(AcuWeatherResultDto dto)
         {
-            string AccuWeatherAPI = "0W13ZaWmgJDBaIJNASqT4MS8d3WcfzTV";
+            string AccuWeatherAPI = "";
 
             using (WebClient client = new WebClient())
             {
