@@ -39,13 +39,19 @@ namespace Shop.ApplicationServices.Services
                     dto.Key = locationResult.Key;
 
                     // Forecast API call
-                    string forecastUrl = $"http://dataservice.accuweather.com/forecasts/v1/daily/1day/{dto.Key}?apikey={AccuWeatherAPI}";
+                    string forecastUrl = $"http://dataservice.accuweather.com/forecasts/v1/daily/1day/{dto.Key}?apikey={AccuWeatherAPI}&metric=true";
                     string forecastJson = client.DownloadString(forecastUrl);
                     AcuWeatherForecastResponseRoot forecastResult = new JavaScriptSerializer().Deserialize<AcuWeatherForecastResponseRoot>(forecastJson);
-
+                    
+                    dto.Text = forecastResult.Headline.Text;
                     dto.Minimum = forecastResult.DailyForecasts.FirstOrDefault().Temperature.Minimum.Value;
                     dto.Maximum = forecastResult.DailyForecasts.FirstOrDefault().Temperature.Maximum.Value;
                     dto.Link = forecastResult.DailyForecasts.FirstOrDefault().Link;
+                    dto.IconPhrase = forecastResult.DailyForecasts.FirstOrDefault()?.Day?.IconPhrase;
+                    
+
+
+
                 }
                 catch (WebException ex)
                 {

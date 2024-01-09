@@ -14,5 +14,12 @@ namespace Shop.Core.Dto.AccuWeather
 
         [JsonPropertyName("DailyForecasts")]
         public List<DailyForecast> DailyForecasts { get; set; }
+
+
+
+   
+
+
+
     }
 }

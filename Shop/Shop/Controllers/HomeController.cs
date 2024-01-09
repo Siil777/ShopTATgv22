@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Models;
 using System.Diagnostics;
 
 namespace Shop.Controllers
 {
+
     public class HomeController : Controller
     {
 

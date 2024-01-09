@@ -17,7 +17,14 @@ namespace Shop.Core.Dto.AccuWeather
         public int Minimum { get; set; }
         public int Maximum { get; set; }
         public string Link { get; set; }
-       
+
+        //Day
+        public string IconPhrase { get; set; }
+
+        //HeadLine
+        public string Text { get; set; }
+
+
 
 
 

@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityRole>
+
+
+<p>
+    <a asp-action="Create">Create</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model=>model.Id)</th>
+       
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+       
+           <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayNameFor(modelItem=>item.Id)</td>
+                <td>@Html.DisplayNameFor(modelItem => item.Name)</td>
+            </tr>
+            
+        }
+    </tbody>
+</table>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>

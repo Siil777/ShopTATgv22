@@ -1,11 +1,12 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shop.Core.Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 
 namespace Shop.Data
 {
-    public class ShopContext : DbContext
+    public class ShopContext : IdentityDbContext<ApplicationUser>
     {
         public ShopContext
             (
@@ -23,6 +24,9 @@ namespace Shop.Data
 
 
                 public DbSet<KinderGarten> KinderGartens { get; set; }
+
+
+                
 
 
 

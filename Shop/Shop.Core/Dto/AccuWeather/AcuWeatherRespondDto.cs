@@ -202,7 +202,11 @@ namespace Shop.Core.Dto.AccuWeather
 
             [JsonPropertyName("Link")]
             public string Link { get; set; }
-        }
+
+         
+
+
+    }
 
         public class Day
         {

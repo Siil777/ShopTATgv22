@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.ApplicationServices.Services;
 using Shop.Core.Domain;
@@ -10,7 +11,8 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Shop.Controllers
 {
-    
+    [Authorize]
+
     public class RealestateController : Controller
     {
         private readonly ShopContext _context;

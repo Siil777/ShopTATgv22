@@ -1,6 +1,28 @@
-﻿ @{
+﻿@* @using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityRole>
+ *@
+
+@{
     ViewData["Title"] = "Home Page";
 }
+
+@* <p>
+    <a asp-action="Create">Create</a>
+</p>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>@Html.DisplayNameFor(model=>model.Id)</th>
+     
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+      
+        <th></th> 
+        
+
+        </th>
+    </tbody>
+</table> *@
 
 
 

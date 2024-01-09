@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.ApplicationServices.Services;
 using Shop.Core.Dto.CoctailDto;
 using Shop.Core.Dto.OpenWeastherDtos;
@@ -8,6 +9,7 @@ using Shop.Models.OpenWeathers;
 
 namespace Shop.Controllers
 {
+    [Authorize]
     public class CoctailsController : Controller
     {
 

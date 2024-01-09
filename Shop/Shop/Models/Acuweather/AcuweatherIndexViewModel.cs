@@ -11,6 +11,12 @@ namespace Shop.Models.Acuweather
         public int Maximum { get; set; }
         public string Link { get; set; }
 
+        public string IconPhrase { get; set; }
+
+        public string Text { get; set; }
+
+
+
 
 
 

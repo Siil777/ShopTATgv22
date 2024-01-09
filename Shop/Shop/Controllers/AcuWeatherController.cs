@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.Core.Dto.AccuWeather;
 using Shop.Core.Dto.CoctailDto;
 using Shop.Core.ServiceInterface;
@@ -7,6 +8,7 @@ using Shop.Models.Coctails;
 
 namespace Shop.Controllers
 {
+    [Authorize]
     public class AcuWeatherController : Controller
     {
 
@@ -47,10 +49,15 @@ namespace Shop.Controllers
             {
 
                 City = dto.City,
+
+                
                
                 Minimum = dto.Minimum,
                 Maximum = dto.Maximum,
                 Link = dto.Link,
+                IconPhrase = dto.IconPhrase,
+                Text = dto.Text
+
 
             };
 

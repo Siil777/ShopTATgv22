@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shop.ApplicationServices.Services;
 using Shop.Core.Dto.CuckNorrisDto;
 using Shop.Core.ServiceInterface;
@@ -6,6 +7,7 @@ using Shop.Models.ChackNorris;
 
 namespace Shop.Controllers
 {
+    [Authorize]
     public class ChackNorrisController : Controller
     {
         private readonly ICackNorisServices _ChackNorisServices;
